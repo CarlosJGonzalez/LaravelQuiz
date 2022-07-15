@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Result;
 use Illuminate\Http\Request;
+use App\Models\SelectedOption;
+use App\Models\Quiz;
+use App\Models\User;
 
 class ResultController extends Controller
 {
@@ -35,7 +38,22 @@ class ResultController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $id = Result::create([
+            'user_id' => $request->user,
+            'quiz_id' => $request->quizid,
+        ])->id;
+
+        SelectedOption::create([
+            'result_id' => $id,
+            'options' => json_encode( $request->opt ),
+        ]);
+
+        $quiz = Quiz::where('id', $request->quizid)->get();
+        $user = User::where('id', $request->user)->get();
+     
+        return view('quiz.results')
+            ->with('quiz', $quiz)
+            ->with('user', $user);
     }
 
     /**

@@ -2,7 +2,7 @@
 @section('content')
     <div class="container">
         <div class="col-12 pt-2">
-            results here
+            {{$user}} {{$quiz}}
         </div>
     </div>
 @endsection

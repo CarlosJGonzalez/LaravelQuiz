@@ -9,18 +9,28 @@
                 <hr>
                 <br><br>
                 <form id="frm" class="" action="{{route('quiz.save')}}" method="POST">
-                    <input type="hidden" name="quizid" value="{{$quiz['id']}}">
                     @csrf
-                    <ol>
-                        @foreach( $questions as $question )
-                            <li>
-                                <div class="question m-1 p-1 bold">{{{ $question->question }}}</div>
-                                @if(count($question->options))
-                                    @include('quiz.partial',['options' => $question->options])
-                                @endif
-                            </li>
+                    <input type="hidden" name="quizid" value="{{$quiz['id']}}">
+                    <div class="form-group">
+                        <select required name="user">
+                        <option value="" selected>Choose an User</option>
+                        @foreach( $users as $user )
+                        <option value="{{$user->id}}">{{$user->name}}</option>
                         @endforeach
-                    </ol>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <ol>
+                            @foreach( $questions as $question )
+                                <li>
+                                    <div class="question m-1 p-1 bold">{{{ $question->question }}}</div>
+                                    @if(count($question->options))
+                                        @include('quiz.partial',['options' => $question->options])
+                                    @endif
+                                </li>
+                            @endforeach
+                        </ol>
+                    </div>
                     <button class="btn btn-info">Submit</button>
                 </form>
             </div>

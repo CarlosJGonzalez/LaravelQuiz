@@ -39,13 +39,16 @@ class QuizController extends Controller
         return view('quiz.show', [
             'quiz' => $quiz,
             'count' => $count,
-            'users' => $users,
         ]);
     }
 
     public function start($id)
     {
-        /*
+        /*********************************
+         * Users
+         */
+        $users = User::all();
+
         /************************************
          * Get the quiz
          */
@@ -58,12 +61,7 @@ class QuizController extends Controller
 
         return view('quiz.start')
             ->with('quiz', $quiz[0])
-            ->with('questions',$questions);
-    }
-
-    public function store(Request $request)
-    {
-
-        return view('quiz.results');
+            ->with('questions',$questions)
+            ->with('users', $users);
     }
 }

@@ -12,4 +12,9 @@ class QuizzesOption extends Model
     {
         return $this->belongsTo(Question::class);
     }
+
+    public function selected_opts()
+    {
+        return $this->hasMany(SelectedOption::class);
+    }
 }

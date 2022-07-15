@@ -25,7 +25,7 @@ Route::get('/quizzes', [app\QuizController::class, 'index']);
 Route::get('/quiz/{quiz}', [app\QuizController::class, 'show']);
 Route::get('/quiz/{id}/questions', [app\QuizController::class, 'questions']);
 Route::get('/quiz/{id}/start', [app\QuizController::class, 'start']);
-Route::post('/quiz/save', [app\QuizController::class, 'store'])->name('quiz.save');
+Route::post('/quiz/save', [app\ResultController::class, 'store'])->name('quiz.save');
 
 /*********************************************************************************************
  * Question
