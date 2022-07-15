@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\SelectedOption;
 use App\Models\Quiz;
 use App\Models\User;
+use App\Models\QuizzesOption;
+use App\Models\Question;
 
 class ResultController extends Controller
 {
@@ -50,10 +52,19 @@ class ResultController extends Controller
 
         $quiz = Quiz::where('id', $request->quizid)->get();
         $user = User::where('id', $request->user)->get();
-     
+
+        $rawQuestions = json_decode( json_encode($request->opt), true );
+        foreach($rawQuestions as $index => $opt )
+        {
+            $questions[$index] = Question::with('options')->where('id', $index)->get();
+            $responses[$opt]   = QuizzesOption::where('id', $opt)->get();
+        }
+
         return view('quiz.results')
             ->with('quiz', $quiz)
-            ->with('user', $user);
+            ->with('user', $user)
+            ->with('questions', $questions)
+            ->with('responses', $responses);
     }
 
     /**

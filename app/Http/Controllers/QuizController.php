@@ -55,7 +55,7 @@ class QuizController extends Controller
         $quiz = Quiz::where('id', $id)->get();
 
         /******************************************
-         * Get the questions
+         * Get the questions and response options
          */
         $questions = Question::with('options')->get();
 

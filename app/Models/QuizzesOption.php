@@ -15,6 +15,6 @@ class QuizzesOption extends Model
 
     public function selected_opts()
     {
-        return $this->hasMany(SelectedOption::class);
+        //return $this->hasMany(SelectedOption::class);
     }
 }
