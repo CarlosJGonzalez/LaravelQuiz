@@ -9,7 +9,7 @@ class Question extends Model
 {
     use HasFactory;
 
-    public function question()
+    public function questions()
     {
         return $this->belongsTo(Quiz::class);//class, 'foreign_key','owner_key')
     }
