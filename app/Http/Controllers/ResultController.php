@@ -40,13 +40,9 @@ class ResultController extends Controller
      */
     public function store(Request $request)
     {
-        $id = Result::create([
+        Result::create([
             'user_id' => $request->user,
             'quiz_id' => $request->quizid,
-        ])->id;
-
-        SelectedOption::create([
-            'result_id' => $id,
             'options' => json_encode( $request->opt ),
         ]);
 

@@ -57,7 +57,7 @@ class QuizController extends Controller
         /******************************************
          * Get the questions and response options
          */
-        $questions = Question::with('options')->get();
+        $questions = Question::where('quiz_id', $id)->with('options')->get();
 
         return view('quiz.start')
             ->with('quiz', $quiz[0])

@@ -17,6 +17,7 @@ class CreateResultsTable extends Migration
             $table->id();
             $table->biginteger('user_id')->unsigned();
             $table->biginteger('quiz_id')->unsigned();
+            $table->json('options');
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('quiz_id')->references('id')->on('quizzes');

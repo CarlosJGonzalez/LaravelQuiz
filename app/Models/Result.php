@@ -8,8 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Result extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id', 'quiz_id'];
-
+    protected $fillable = ['user_id', 'quiz_id', 'options'];
+    protected $cast = [
+        'options' => 'array'
+    ];
+    
     public function quiz()
     {
         return $this->belonsTo(Quiz::class) ;
