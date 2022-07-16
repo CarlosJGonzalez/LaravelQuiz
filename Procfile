@@ -1,1 +1,1 @@
-"web: vendor/bin/cg-quiz public/" 
+"web: vendor/bin/heroku-php-apache2 public/" 
