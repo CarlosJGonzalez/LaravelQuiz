@@ -8,7 +8,7 @@
                 <p>{!! $quiz['description'] !!}</p> 
                 <hr>
                 <br><br>
-                <form id="frm" class="" action="https://cg-quiz.herokuapp.com/quiz/save')}}" method="POST">
+                <form id="frm" class="" action="{{route('quiz.save')}}" method="POST">
                     @csrf
                     <input type="hidden" name="quizid" value="{{$quiz['id']}}">
                     <div class="form-group">
