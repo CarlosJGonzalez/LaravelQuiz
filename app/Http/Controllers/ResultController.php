@@ -56,15 +56,21 @@ class ResultController extends Controller
         $rawQuestions = json_decode( json_encode($request->opt), true );
         foreach($rawQuestions as $index => $opt )
         {
-            $questions[$index] = Question::with('options')->where('id', $index)->get();
-            $responses[$opt]   = QuizzesOption::where('id', $opt)->get();
-        }
+            $q = Question::where('id', $index)->get();
+            $responses  = QuizzesOption::where('id', $opt)->get();
 
+                $temp = json_decode($q, true);
+                $q = array_merge(...array_values($temp));
+
+                $resArr = json_decode($responses,true);
+                    $q['response'] = array_merge(...array_values($resArr));
+            $questions[$index] = $q;
+        }
+        
         return view('quiz.results')
             ->with('quiz', $quiz)
             ->with('user', $user)
-            ->with('questions', $questions)
-            ->with('responses', $responses);
+            ->with('questions', $questions);
     }
 
     /**

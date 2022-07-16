@@ -2,20 +2,24 @@
 @section('content')
     <div class="container">
         <div class="col-12 pt-2">
-            {{$user[0]->name}} {{$quiz[0]->name}} 
+            {{$user[0]->name}}
         </div>
+        <div class="col-12 pt-2">
+            {{$quiz[0]->name}} : {{$quiz[0]->description}}
+        </div>        
         <ol>
-        @foreach( $questions as $index => $question)
+        @foreach( $questions as $index => $q)
             <li>
-                <div class="qustion m-1 p-1">{{{ $question[0]->question }}}</div>
-                @if( count($question[0]->options) > 0)
-                <ol>
-                    @foreach($question[0]->options as $opt)
-                        <li>{{$opt->option}}({{$opt->id}})</li>
-                    @endforeach
-                </ol>
+                <div class="qustion m-1 p-1">{{{ $q['question'] }}}</div>
+                @if( count($q['response']) > 0)
+                <ul>
+                    @if($q["response"]["value"] == 0 )
+                    <li class="alert alert-warning">{{$q["response"]["option"]}}</li>
+                    @else
+                    <li class="alert alert-success">{{$q["response"]["option"]}}</li>
+                    @endif
+                </ul>
                 @endif
-
             </li>
         @endforeach
         </ol>
