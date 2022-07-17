@@ -24,7 +24,7 @@ class QuizController extends Controller
     public function index()
     {
         try{
-            $quizzes = Quiz::all();
+            $quizzes = Quiz::all()->where('live', 1);
             if(!$quizzes){
                 return view('404');
             }
