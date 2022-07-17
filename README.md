@@ -14,6 +14,6 @@
 - Import the SQL file to populate user, quiz and quizzes_options table
 - Run the command php artisan serve and open up the app
 <p>
-##Relationship between tables
+## Relationship between tables
 ![Alt text](relative/public/assets/images/relationship.png?raw=true "Relationship")
 </p>
