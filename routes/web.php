@@ -14,9 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 use \App\Http\Controllers as app;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [app\ResultController::class, 'stats']);
+// function () {
+//     return view('welcome');
+// });
 
 /*********************************************************************************************
  * Quiz
@@ -26,7 +27,7 @@ Route::get('/quiz/{quiz}', [app\QuizController::class, 'show']);
 Route::get('/quiz/{id}/questions', [app\QuizController::class, 'questions']);
 Route::get('/quiz/{id}/start', [app\QuizController::class, 'start']);
 Route::post('/quiz/save', [app\ResultController::class, 'store'])->name('quiz.save');
-
+Route::post('/stats', [app\ResultController::class, 'stats']);
 /*********************************************************************************************
  * Question
  *********************************************************************************************/

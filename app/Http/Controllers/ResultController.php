@@ -8,6 +8,7 @@ use App\Models\Quiz;
 use App\Models\User;
 use App\Models\QuizzesOption;
 use App\Models\Question;
+use Illuminate\Support\Facades\DB;
 
 class ResultController extends Controller
 {
@@ -138,5 +139,28 @@ class ResultController extends Controller
     public function destroy(Result $result)
     {
         //
+    }
+
+    public function stats()
+    {
+        $quizzes = DB::table('results')
+            ->select(DB::raw('count(*) as data, name as label'))
+            ->join('quizzes', 'quizzes.id', 'quiz_id')
+            ->groupBy('quiz_id','name')
+            ->get()->toArray();
+        foreach ( $quizzes as $quiz )
+        {
+            $labels[] = $quiz->label;
+            $data[] = $quiz->data;
+        }
+
+        $data = json_encode([
+            'labels' => $labels,
+            'data' => $data
+        ]);
+        
+        return view('welcome',[
+            'data' => $data
+        ]);
     }
 }
