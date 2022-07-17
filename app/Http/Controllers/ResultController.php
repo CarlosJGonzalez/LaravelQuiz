@@ -88,11 +88,15 @@ class ResultController extends Controller
                 'options' => json_encode( $request->opt ),
             ])->id;
 
+            if(!$id){
+                return view('500');
+            }
             return redirect("/results/${id}");
+            
         }catch( \Illuminate\Database\QueryException $e ){
             return view('500', ['message' => 'There is a problem with the database connection. Please try later.']);
         }catch( \Exception $e ){
-            return view('500', 'There site is in maintenance. Please try again later.');
+            return view('500', ['message' =>'There site is in maintenance. Please try again later.']);
         }
     }
 
@@ -143,24 +147,35 @@ class ResultController extends Controller
 
     public function stats()
     {
-        $quizzes = DB::table('results')
-            ->select(DB::raw('count(*) as data, name as label'))
-            ->join('quizzes', 'quizzes.id', 'quiz_id')
-            ->groupBy('quiz_id','name')
-            ->get()->toArray();
-        foreach ( $quizzes as $quiz )
-        {
-            $labels[] = $quiz->label;
-            $data[] = $quiz->data;
-        }
+        try{
+            $quizzes = DB::table('results')
+                ->select(DB::raw('count(*) as data, name as label'))
+                ->join('quizzes', 'quizzes.id', 'quiz_id')
+                ->groupBy('quiz_id','name')
+                ->get()->toArray();
 
-        $data = json_encode([
-            'labels' => $labels,
-            'data' => $data
-        ]);
-        
-        return view('welcome',[
-            'data' => $data
-        ]);
+            if(!$quizzes){
+                return view('500');
+            }               
+
+            foreach ( $quizzes as $quiz )
+            {
+                $labels[] = $quiz->label;
+                $data[] = $quiz->data;
+            }
+
+            $data = json_encode([
+                'labels' => $labels,
+                'data' => $data
+            ]);
+            
+            return view('welcome',[
+                'data' => $data
+            ]);
+        }catch( \Illumiate\Database\QueryException $e ){
+            return view( '500', ['message' => 'There is a problem with the database connection. Please try later.']);
+        }catch( \Exception $e ){
+            return view('500', ['message' => 'There site is in maintenance. Please try again later.']);
+        }
     }
 }
