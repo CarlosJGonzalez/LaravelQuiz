@@ -17,9 +17,36 @@ class ResultController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        //
+        $result = Result::where('id', $id)->get()->toArray();
+        if( !$result ){
+            return view('404');
+        }
+        
+        $subset = array_merge(...array_values($result));
+
+        $quiz = Quiz::where('id', $subset['quiz_id'])->get();
+        $user = User::where('id', $subset['user_id'])->get();
+
+        $rawQuestions = json_decode( $subset['options'], true );
+        foreach($rawQuestions as $index => $opt )
+        {
+            $q = Question::where('id', $index)->get();
+            $responses  = QuizzesOption::where('id', $opt)->get();
+
+                $temp = json_decode($q, true);
+                $q = array_merge(...array_values($temp));
+
+                $resArr = json_decode($responses,true);
+                    $q['response'] = array_merge(...array_values($resArr));
+            $questions[$index] = $q;
+        }
+        
+        return view('quiz.results')
+            ->with('quiz', $quiz)
+            ->with('user', $user)
+            ->with('questions', $questions);
     }
 
     /**
@@ -40,33 +67,13 @@ class ResultController extends Controller
      */
     public function store(Request $request)
     {
-        Result::create([
+        $id = Result::create([
             'user_id' => $request->user,
             'quiz_id' => $request->quizid,
             'options' => json_encode( $request->opt ),
-        ]);
+        ])->id;
 
-        $quiz = Quiz::where('id', $request->quizid)->get();
-        $user = User::where('id', $request->user)->get();
-
-        $rawQuestions = json_decode( json_encode($request->opt), true );
-        foreach($rawQuestions as $index => $opt )
-        {
-            $q = Question::where('id', $index)->get();
-            $responses  = QuizzesOption::where('id', $opt)->get();
-
-                $temp = json_decode($q, true);
-                $q = array_merge(...array_values($temp));
-
-                $resArr = json_decode($responses,true);
-                    $q['response'] = array_merge(...array_values($resArr));
-            $questions[$index] = $q;
-        }
-        
-        return view('quiz.results')
-            ->with('quiz', $quiz)
-            ->with('user', $user)
-            ->with('questions', $questions);
+        return redirect("/results/${id}");
     }
 
     /**

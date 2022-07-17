@@ -53,7 +53,7 @@ Route::get('/option/{quizOption}', [app\QuizzesOptionController::class, 'show'])
 /*********************************************************************************************
  * Results
  *********************************************************************************************/
-
+Route::get('/results/{id}', [app\ResultController::class, 'index']);
 
  
 
@@ -66,3 +66,7 @@ Route::get('/option/{quizOption}', [app\QuizzesOptionController::class, 'show'])
 Route::get('/users', [app\UserController::class, 'index']);
 
 Route::get('/user/{user}', [app\UserController::class, 'show']);
+
+/******************************************************************************************
+ * 404
+ */
