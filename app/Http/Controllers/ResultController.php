@@ -30,6 +30,9 @@ class ResultController extends Controller
         $user = User::where('id', $subset['user_id'])->get();
 
         $rawQuestions = json_decode( $subset['options'], true );
+        $totalResponses=0;
+        $score = 0;
+        $goodResponses = 0;
         foreach($rawQuestions as $index => $opt )
         {
             $q = Question::where('id', $index)->get();
@@ -40,13 +43,18 @@ class ResultController extends Controller
 
                 $resArr = json_decode($responses,true);
                     $q['response'] = array_merge(...array_values($resArr));
+                
+                ($q['response']['value'] == 1) ? $goodResponses++ : null;
+                $totalResponses++;
             $questions[$index] = $q;
         }
-        
+        $score = number_format(100*$goodResponses/$totalResponses, 1);
+
         return view('quiz.results')
             ->with('quiz', $quiz)
             ->with('user', $user)
-            ->with('questions', $questions);
+            ->with('questions', $questions)
+            ->with('score', $score);
     }
 
     /**

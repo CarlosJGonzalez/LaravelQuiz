@@ -8,10 +8,6 @@
                         <h1 class="display-one">Take a Quiz!</h1>
                         <p>Enjoy doing a Quiz!</p>
                     </div>
-                    <!-- <div class="col-4">
-                        <p>Create new Post</p>
-                        <a href="/blog/create/post" class="btn btn-primary btn-sm">Add Post</a>
-                    </div> -->
                 </div>                
                 @forelse($quizzes as $quiz)
                     <ul>

@@ -1,9 +1,15 @@
 @extends('layouts.app')
 @section('content')
     <div class="container">
-        <div class="alert alert-primary" role="alert">
-            <h4 class="alert-heading">Well done!</h4>
-            <p>Aww yeah, you successfully completed this quiz.</p>
+        <div class="alert alert-primary row" role="alert">
+            <div class="col-8">
+                <h4 class="alert-heading">Well done!</h4>
+                <p>Aww yeah, you successfully completed this quiz.</p>
+            </div>
+            <div class="col-4">
+                Your score is:
+                <h1>{{$score}}%</h1>
+            </div>
             <hr>
         </div>
         <div class="col-12 pt-2">
@@ -37,4 +43,12 @@
         @endforeach
         </ol>
     </div>
+    <footer class="container">
+        <div class="container">
+            <div class="row" style="text-align: right;">
+                <a class="text-right mb-2 p-2" href="../quiz/{{ $quiz[0]->id }}">I want to do this Quiz again!</a>
+            </div>
+            
+        </div>        
+    </footer>
 @endsection
