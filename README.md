@@ -15,5 +15,5 @@
 - Run the command php artisan serve and open up the app
 <p>
 ## Relationship between tables
-![Alt text](relative/public/assets/images/relationship.png?raw=true "Relationship")
+<img src="https://github.com/CarlosJGonzalez/LaravelQuiz/blob/master/public/assets/images/relationship.png">
 </p>
