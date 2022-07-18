@@ -11,7 +11,7 @@
 - **[Clone the repository](https://github.com/CarlosJGonzalez/LaravelQuiz.git)**
 - Create an environment file:
 - Run php artisan migrate:fresh
-- Import the SQL file to populate user, quiz and quizzes_options table
+- Import the SQL file (quiz-data.sql) to populate user, quiz and quizzes_options table. If you don't run migration, you could import all the database structure, data and indexes(quiz-structure-and-data.sql).
 - Run the command php artisan serve and open up the app
 <p>
 ## Relationship between tables
